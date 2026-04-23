@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Newsreader } from "next/font/google";
+import { Inter, JetBrains_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,15 +7,14 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
-  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
@@ -29,9 +28,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
+      <html
       lang="en"
-      className={`dark ${inter.variable} ${spaceGrotesk.variable} ${newsreader.variable} h-full antialiased`}
+      className={`dark ${inter.variable} ${jetbrainsMono.variable} ${outfit.variable} h-full antialiased`}
     >
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />

@@ -56,13 +56,17 @@
   --radius-xl: 0.75rem;
   --radius-full: 9999px;
   
+  --font-serif: var(--font-outfit);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+
   --font-body-md: var(--font-inter);
-  --font-label-md: var(--font-space-grotesk);
+  --font-label-md: var(--font-jetbrains-mono);
   --font-body-lg: var(--font-inter);
-  --font-headline-md: var(--font-newsreader);
-  --font-label-sm: var(--font-space-grotesk);
-  --font-headline-xl: var(--font-newsreader);
-  --font-headline-lg: var(--font-newsreader);
+  --font-headline-md: var(--font-outfit);
+  --font-label-sm: var(--font-jetbrains-mono);
+  --font-headline-xl: var(--font-outfit);
+  --font-headline-lg: var(--font-outfit);
 }
 
 body {
