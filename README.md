@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aethelgard AI — Prismatic Noir
 
-## Getting Started
+A high-fidelity, minimalist agentic AI onboarding system built with Next.js 15. Designed with a "Prismatic Noir" aesthetic, this landing page provides a cinematic sequence from system bootup to agent communication channel configuration.
 
-First, run the development server:
+![Project Preview Banner](https://lh3.googleusercontent.com/aida-public/AB6AXuCY2IJJZvDqdzdOKQ6DPygBDDWGoUzV56yRgl1zFgVNqQvRybEsgj3eyaHfak5gljTvACCM251X-MTS9tx6NC7u9FFA2SHLJK-fLlHDgsetxKEFQ497U5ZfBKyhuE7Tnv24D40qTp8KIjBKmjRKzu49xOEy5GNQoF172V95qSFGaVKdbeMq3a1Q0HD4A87PZtXtDpmFbQZewqsuiXt38l6PBVleEWALkcssRS8JN7aTZnJWesb2L504hSsVTXKYvjayaRxz2UDWvA)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌌 The Aesthetic
+The interface utilizes a strict architectural palette of **Amber-Gold**, **Zinc-Void**, and **Stippled Grey**, characterized by:
+- **Fractal Noise Overlays**: Custom grain textures for a tactile, analog feel.
+- **Glassmorphism 2.0**: Ultra-thin borders and deep backdrop-blur reflections.
+- **Cinematic Typography**: A curated pairing of `Outfit` (Serif) and `JetBrains Mono` (Label).
+- **Stippled Dithering**: Decorative UI accents echoing early cybernetic visual protocols.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 Features
+- **Onboarding State Machine**: Managed flow from GitHub Repository Authorization to Secondary Channel configuration.
+- **Secondary Channels**: Compact, interactive connection cards for **Gmail**, **Telegram**, and **Discord** with official brand insignia.
+- **Viewport Optimization**: Auto-centering layout designed to eliminate scrolling on standard displays.
+- **Protocol Bootload**: A cinematic entry sequence with multi-stage text diagnostics and amber-button activation.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Tech Stack
+- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Icons**: [Material Symbols](https://fonts.google.com/icons) & [SimpleIcons](https://simpleicons.org/)
+- **Typography**: [Google Fonts](https://fonts.google.com/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔧 Installation
 
-## Learn More
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/IronicRayquaza/ulla_britta_frontend.git
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔒 Security Protocol
+All transmissions are managed via the **Prismatic Noir Bridge Protocol**, ensuring end-to-end encrypted telemetry across the Aethelgard lattice.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Created by the Prismatic Noir Protocol Archives.*
