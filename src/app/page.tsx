@@ -11,6 +11,33 @@ export default function Home() {
   const [isPoweredOn, setIsPoweredOn] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
   const videoRef = useRef<HTMLVideoElement>(null);
+  
+  const statuses = [
+    { text: "Analyzing Repository Architecture...", icon: "database" },
+    { text: "Neural Link Sync", icon: "hub" },
+    { text: "Monitoring Real-time Telemetry Streams", icon: "query_stats" },
+    { text: "Evaluating Vectors", icon: "rocket_launch" },
+    { text: "Optimizing Cognitive Throughput Control", icon: "psychology" }
+  ];
+  const [currentStatusIndex, setCurrentStatusIndex] = useState(0);
+  const [islandWidth, setIslandWidth] = useState(300);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStatusIndex((prev) => (prev + 1) % statuses.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Measure content width whenever status changes
+  useEffect(() => {
+    if (contentRef.current) {
+      // Add padding (px-7 on both sides = ~56px) + extra for icon/spacing
+      const newWidth = contentRef.current.scrollWidth + 100; 
+      setIslandWidth(newWidth);
+    }
+  }, [currentStatusIndex]);
 
   useEffect(() => {
     if (stage === 'loading') {
@@ -268,31 +295,57 @@ export default function Home() {
            </div>
         ) : (
           <div className="bg-[#131314] text-[#e5e2e3] min-h-screen flex flex-col selection:bg-[#ffb84d]/30 selection:text-[#ffb84d] relative animate-[fadeIn_2s_ease-out]">
+            {/* AGENT CONFIG BACKGROUND - MAXIMUM VISIBILITY */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+               <img src="/Good Night Loop GIF by xponentialdesign - Find & Share on GIPHY.gif" alt="bg" className="absolute inset-0 w-full h-full object-cover opacity-45" />
+               <div className="absolute inset-0 bg-gradient-to-b from-[#131314] via-black/20 to-[#131314] opacity-30"></div>
+            </div>
+
             {/* EXACT FRACTAL NOISE GRAIN OVERLAY */}
             <div className="absolute inset-0 pointer-events-none z-10" 
                  style={{ opacity: 0.05, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
 
-            {/* TopAppBar */}
-            <header className="bg-[#131314]/60 backdrop-blur-2xl border-b border-white/[0.03] shadow-[0_4px_60px_rgba(0,0,0,0.8)] fixed top-0 w-full z-50">
-              <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-amber-500/20 to-transparent"></div>
-              <div className="flex justify-between items-center w-full px-8 py-5 max-w-screen-2xl mx-auto">
+            {/* TopAppBar - Floating Elements Only */}
+            <header className="fixed top-0 w-full z-50 pointer-events-none">
+              <div className="flex justify-between items-center w-full px-8 py-5 max-w-screen-2xl mx-auto pointer-events-auto">
                 <div className="text-[26px] text-[#ffb84d] drop-shadow-[0_0_12px_rgba(255,184,77,0.3)] font-serif tracking-[0.02em] italic">
                   Aethelgard AI
                 </div>
-                <nav className="hidden md:flex items-center gap-14">
-                  <a className="text-[#b7b5b1] hover:text-white transition-all duration-300 tracking-[0.1em] font-serif italic text-sm relative group" href="#">
-                    Status
-                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
-                  </a>
-                  <a className="text-[#b7b5b1] hover:text-white transition-all duration-300 tracking-[0.1em] font-serif italic text-sm relative group" href="#">
-                    Archives
-                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
-                  </a>
-                  <a className="text-[#b7b5b1] hover:text-white transition-all duration-300 tracking-[0.1em] font-serif italic text-sm relative group" href="#">
-                    Nexus
-                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
-                  </a>
-                </nav>
+                {/* Refined Dynamic Island - Pixel-Perfect Width Transformation */}
+                <div className="hidden lg:flex items-center justify-center flex-grow group/island">
+                  <div 
+                    className="bg-black/90 backdrop-blur-3xl border border-white/10 rounded-full flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] shadow-[0_0_40px_rgba(0,0,0,0.7)] relative overflow-hidden h-[44px]"
+                    style={{ width: `${islandWidth}px` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.05] to-transparent -translate-x-full group-hover/island:translate-x-full transition-transform duration-1000"></div>
+                    
+                    <div className="relative flex items-center gap-4 h-full px-8">
+                      <div className="flex items-center justify-center">
+                        <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-[pulse_2s_infinite]"></div>
+                      </div>
+                      
+                      <div className="h-full overflow-hidden flex flex-col justify-center">
+                        {/* Hidden measurer to get actual width */}
+                        <div ref={contentRef} className="absolute opacity-0 pointer-events-none whitespace-nowrap flex items-center gap-3">
+                          <span className="material-symbols-outlined text-[18px]">{statuses[currentStatusIndex].icon}</span>
+                          <p className="text-[11px] font-mono tracking-[0.15em] uppercase">{statuses[currentStatusIndex].text}</p>
+                        </div>
+
+                        <div 
+                          key={currentStatusIndex}
+                          className="flex items-center gap-3 whitespace-nowrap animate-[slideUp_0.8s_cubic-bezier(0.19,1,0.22,1)_forwards]"
+                        >
+                          <span className="material-symbols-outlined text-amber-400 text-[18px]">
+                            {statuses[currentStatusIndex].icon}
+                          </span>
+                          <p className="text-[11px] font-mono tracking-[0.15em] text-white/95 uppercase">
+                            {statuses[currentStatusIndex].text}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div className="flex items-center gap-6">
                   <button className="material-symbols-outlined text-[#b7b5b1] hover:text-[#ffb84d] hover:rotate-90 transition-all duration-700 p-2 text-[22px]">settings</button>
                   <button className="material-symbols-outlined text-[#b7b5b1] hover:text-[#ffb84d] transition-all duration-500 p-2 text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>account_circle</button>
@@ -324,10 +377,10 @@ export default function Home() {
                       {/* Decorative stippled halo */}
                       <div className="absolute -inset-2 bg-[#ffb84d]/5 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000"></div>
                       
-                      <div className="relative bg-[#1c1b1c] p-[1px]">
+                      <div className="relative bg-white/[0.03] backdrop-blur-2xl p-[1px] border border-white/10">
                         <label className="sr-only" htmlFor="transmission_email">Email Address</label>
                         <input 
-                          className="w-full bg-transparent border-none text-[14px] font-label-sm text-[#e5e2e3] placeholder:text-[#353436] focus:ring-0 focus:outline-none px-6 py-8 uppercase tracking-[0.1em] text-center" 
+                          className="w-full bg-transparent border-none text-[14px] font-label-sm text-[#e5e2e3] placeholder:text-[#353436] focus:ring-0 focus:outline-none px-6 py-10 uppercase tracking-[0.1em] text-center" 
                           id="transmission_email" 
                           placeholder="OPERATOR@AETHELGARD.VOID" 
                           type="email"
@@ -371,9 +424,10 @@ export default function Home() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
                   
                   {/* Gmail Card */}
-                  <div className="group relative p-1 bg-gradient-to-br from-white/5 to-transparent border border-white/5 rounded-xl overflow-hidden transition-all duration-500 hover:border-[#ffb84d]/40 hover:shadow-[0_0_30px_rgba(255,184,77,0.15)] bg-[#131314]">
+                  {/* Glassmorphism Card Style */}
+                  <div className="group relative p-1 bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden transition-all duration-500 hover:border-[#ffb84d]/40 hover:shadow-[0_0_30px_rgba(255,184,77,0.15)]">
                     <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ background: 'linear-gradient(135deg, rgba(255,184,77,0.1) 0%, transparent 100%)', maskImage: 'radial-gradient(circle at center, black 1px, transparent 0)', WebkitMaskImage: 'radial-gradient(circle at center, black 1px, transparent 0)', maskSize: '2px 2px', WebkitMaskSize: '2px 2px' }}></div>
-                    <div className="relative p-6 lg:p-7 flex flex-col h-full bg-[#0e0e0f]/60 backdrop-blur-md rounded-lg">
+                    <div className="relative p-6 lg:p-7 flex flex-col h-full bg-white/[0.02] backdrop-blur-md rounded-lg">
                       <div className="mb-6 flex justify-between items-start">
                         <div className="w-10 h-10 relative flex items-center justify-center">
                           <div className="absolute inset-0 bg-[#ffb84d]/10 rounded-full blur-xl group-hover:bg-[#ffb84d]/20 transition-all duration-700"></div>
@@ -402,9 +456,10 @@ export default function Home() {
                   </div>
 
                   {/* Telegram Card */}
-                  <div className="group relative p-1 bg-gradient-to-br from-white/5 to-transparent border border-white/5 rounded-xl overflow-hidden transition-all duration-500 hover:border-[#ffb84d]/40 hover:shadow-[0_0_30px_rgba(255,184,77,0.15)] bg-[#131314]">
+                  {/* Glassmorphism Card Style */}
+                  <div className="group relative p-1 bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden transition-all duration-500 hover:border-[#ffb84d]/40 hover:shadow-[0_0_30px_rgba(255,184,77,0.15)]">
                     <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ background: 'linear-gradient(135deg, rgba(255,184,77,0.1) 0%, transparent 100%)', maskImage: 'radial-gradient(circle at center, black 1px, transparent 0)', WebkitMaskImage: 'radial-gradient(circle at center, black 1px, transparent 0)', maskSize: '2px 2px', WebkitMaskSize: '2px 2px' }}></div>
-                    <div className="relative p-6 lg:p-7 flex flex-col h-full bg-[#0e0e0f]/60 backdrop-blur-md rounded-lg">
+                    <div className="relative p-6 lg:p-7 flex flex-col h-full bg-white/[0.02] backdrop-blur-md rounded-lg">
                       <div className="mb-6 flex justify-between items-start">
                         <div className="w-10 h-10 relative flex items-center justify-center">
                           <div className="absolute inset-0 bg-[#ffb84d]/10 rounded-full blur-xl group-hover:bg-[#ffb84d]/20 transition-all duration-700"></div>
@@ -433,9 +488,10 @@ export default function Home() {
                   </div>
 
                   {/* Discord Card */}
-                  <div className="group relative p-1 bg-gradient-to-br from-white/5 to-transparent border border-white/5 rounded-xl overflow-hidden transition-all duration-500 hover:border-[#ffb84d]/40 hover:shadow-[0_0_30px_rgba(255,184,77,0.15)] bg-[#131314]">
+                  {/* Glassmorphism Card Style */}
+                  <div className="group relative p-1 bg-white/[0.02] backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden transition-all duration-500 hover:border-[#ffb84d]/40 hover:shadow-[0_0_30px_rgba(255,184,77,0.15)]">
                     <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ background: 'linear-gradient(135deg, rgba(255,184,77,0.1) 0%, transparent 100%)', maskImage: 'radial-gradient(circle at center, black 1px, transparent 0)', WebkitMaskImage: 'radial-gradient(circle at center, black 1px, transparent 0)', maskSize: '2px 2px', WebkitMaskSize: '2px 2px' }}></div>
-                    <div className="relative p-6 lg:p-7 flex flex-col h-full bg-[#0e0e0f]/60 backdrop-blur-md rounded-lg">
+                    <div className="relative p-6 lg:p-7 flex flex-col h-full bg-white/[0.02] backdrop-blur-md rounded-lg">
                       <div className="mb-6 flex justify-between items-start">
                         <div className="w-10 h-10 relative flex items-center justify-center">
                           <div className="absolute inset-0 bg-[#ffb84d]/10 rounded-full blur-xl group-hover:bg-[#ffb84d]/20 transition-all duration-700"></div>
@@ -522,6 +578,11 @@ export default function Home() {
         @keyframes flowDown {
           from { transform: translateY(-100%); }
           to { transform: translateY(500%); }
+        }
+        @keyframes slideUp {
+          0% { transform: translateY(40px); opacity: 0; filter: blur(10px); }
+          20% { opacity: 0.5; }
+          100% { transform: translateY(0); opacity: 1; filter: blur(0); }
         }
       `}</style>
     </div>
