@@ -68,7 +68,7 @@ export default function Home() {
       {stage === 'loading' && (
         <div className="fixed inset-0 z-[200] bg-black flex flex-col items-center justify-center">
           <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-screen">
-            <source src="/From%20KlickPin%20CF%20Pin%20on%20Pins%20von%20dir%20-%20Pin-37506609392419467.mp4" type="video/mp4" />
+            <source src="/protocol-boot.mp4" type="video/mp4" />
           </video>
           <div className="relative z-10 flex flex-col items-center font-label-md text-amber-500 tracking-[0.3em]">
             <span className="material-symbols-outlined text-[64px] mb-8 animate-spin text-amber-400 drop-shadow-[0_0_15px_rgba(255,184,77,0.8)]" data-icon="data_usage">data_usage</span>
@@ -83,7 +83,7 @@ export default function Home() {
 
       {/* 2. PRESENTATION: HERO REVEAL */}
       <div className={`fixed inset-0 z-[150] transition-all duration-[1500ms] flex flex-col items-center justify-center bg-[#131314] ${stage === 'hero' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <img src="/download.gif" alt="bg" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-color-dodge" />
+        <img src="/hero-bg.gif" alt="bg" className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-color-dodge" />
         <div className="relative z-10 text-center px-6">
           <h1 className="font-serif text-[50px] md:text-[80px] text-white mb-6 leading-tight opacity-0 animate-[fadeUp_1s_ease-out_forwards]">
             An Autonomous <span className="text-amber-400 italic">Agent</span><br />
@@ -97,7 +97,7 @@ export default function Home() {
 
       {/* 3. PRESENTATION: CAPABILITIES REVEAL */}
       <div className={`fixed inset-0 z-[140] transition-all duration-[1500ms] flex flex-col items-center justify-center bg-black ${stage === 'capabilities' ? 'opacity-100 scale-100' : 'opacity-0 scale-110 pointer-events-none'}`}>
-        <img src="/Glitch%20Glow%20GIF%20by%20Erica%20Anderson%20-%20Find%20&%20Share%20on%20GIPHY.gif" alt="bg" className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none" />
+        <img src="/capabilities-bg.gif" alt="bg" className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none" />
         <div className="max-w-6xl w-full px-10">
           <div className="mb-12 text-center">
             <span className="text-amber-500 font-label-sm tracking-[0.3em] uppercase">Architecture</span>
@@ -162,7 +162,7 @@ export default function Home() {
 
       {/* 4. PRESENTATION: WORKFLOW DEMO (Replacing Video) */}
       <div className={`fixed inset-0 z-[130] transition-all duration-[1500ms] bg-black flex items-center justify-center ${stage === 'video' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <img src="/TREYA%20Gradient.jpg" alt="bg" className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none mix-blend-screen" />
+        <img src="/treya-gradient.jpg" alt="bg" className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none mix-blend-screen" />
         <div className="max-w-7xl w-full px-10 relative">
           
           <div className="text-center mb-24 opacity-0 animate-[fadeUp_0.8s_ease-out_forwards]">
@@ -248,7 +248,7 @@ export default function Home() {
         {/* Main Interface Content */}
         {!isPoweredOn ? (
            <div className="fixed inset-0 w-full h-full z-[100] bg-black px-6">
-              <img src="/look%20how%20it%20flies%20-%20do%20you%20want%20to_.gif" alt="bg" className="absolute top-0 left-0 w-full h-full object-cover opacity-60 mix-blend-screen pointer-events-none" />
+              <img src="/flies.gif" alt="bg" className="absolute top-0 left-0 w-full h-full object-cover opacity-60 mix-blend-screen pointer-events-none" />
               
               <div className="absolute top-[20%] md:top-[25%] left-1/2 -translate-x-1/2 w-full text-center z-10 space-y-4">
                 <h2 className="text-white font-serif text-5xl tracking-tight">System Ready.</h2>
