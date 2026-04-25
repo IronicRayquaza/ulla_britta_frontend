@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 type PresentationStage = 'loading' | 'hero' | 'capabilities' | 'video' | 'ready';
 
@@ -10,7 +13,21 @@ export default function Home() {
   const [progress, setProgress] = useState(0);
   const [isPoweredOn, setIsPoweredOn] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
+  const [user, setUser] = useState<any>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const supabase = createClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+      if (user) {
+        router.push('/dashboard');
+      }
+    };
+    checkUser();
+  }, [supabase, router]);
   
   const statuses = [
     { text: "Analyzing Repository Architecture...", icon: "database" },
@@ -75,7 +92,11 @@ export default function Home() {
   }, [stage]);
 
   const handlePowerOn = () => {
-    setIsPoweredOn(true);
+    if (user) {
+      router.push('/dashboard');
+    } else {
+      router.push('/auth/login');
+    }
   };
 
   return (
@@ -278,8 +299,12 @@ export default function Home() {
               <img src="/flies.gif" alt="bg" className="absolute top-0 left-0 w-full h-full object-cover opacity-60 mix-blend-screen pointer-events-none" />
               
               <div className="absolute top-[20%] md:top-[25%] left-1/2 -translate-x-1/2 w-full text-center z-10 space-y-4">
-                <h2 className="text-white font-serif text-5xl tracking-tight">System Ready.</h2>
-                <p className="text-white/40 font-body-md max-w-sm mx-auto px-4">Aethelgard protocol is fully initialized and waiting for authorization.</p>
+                <h2 className="text-white font-serif text-5xl tracking-tight">
+                  {user ? `Welcome, ${user.user_metadata.full_name || 'Operator'}` : 'System Ready.'}
+                </h2>
+                <p className="text-white/40 font-body-md max-w-sm mx-auto px-4">
+                  {user ? 'Neural link is active. Aethelgard is ready for deployment.' : 'Aethelgard protocol is fully initialized and waiting for authorization.'}
+                </p>
               </div>
               
               <div className="absolute bottom-[10%] md:bottom-[15%] left-1/2 -translate-x-1/2 z-10 flex flex-col items-center">
@@ -346,9 +371,9 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 pointer-events-auto">
                   <button className="material-symbols-outlined text-[#b7b5b1] hover:text-[#ffb84d] hover:rotate-90 transition-all duration-700 p-2 text-[22px]">settings</button>
-                  <button className="material-symbols-outlined text-[#b7b5b1] hover:text-[#ffb84d] transition-all duration-500 p-2 text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>account_circle</button>
+                  <Link href="/auth/login" className="material-symbols-outlined text-[#b7b5b1] hover:text-[#ffb84d] transition-all duration-500 p-2 text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>account_circle</Link>
                 </div>
               </div>
             </header>
@@ -361,46 +386,43 @@ export default function Home() {
                   <div className="absolute -top-12 -left-12 w-24 h-24 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #2a2a2b 1px, transparent 1px)', backgroundSize: '4px 4px' }}></div>
                   <div className="absolute -bottom-12 -right-12 w-32 h-32 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #2a2a2b 1px, transparent 1px)', backgroundSize: '4px 4px' }}></div>
                   
-                  <div className="text-center mb-10 relative z-20">
-                    <span className="text-[11px] text-[#ffb84d] uppercase tracking-[0.3em] mb-2 block opacity-80 font-label-sm">Protocol Configuration</span>
-                    <h1 className="text-4xl md:text-[48px] text-[#e5e2e3] mb-4 leading-[1.1] tracking-tight font-serif">Transmission Address</h1>
-                    <p className="text-[15px] text-[#d6c4b0] max-w-md mx-auto italic leading-[1.5] font-body-md opacity-70">
-                      Specify the designation for your daily intelligence reports and critical system alerts.
-                    </p>
-                  </div>
-
-                  {/* Form Section */}
-                  <div className="space-y-16 relative z-20">
-                    <div className="relative group">
-                      {/* Textured, Dithered Border Container */}
-                      <div className="absolute inset-0 border border-[#514536]/30 group-focus-within:border-[#ffb84d]/50 transition-colors duration-700 pointer-events-none"></div>
-                      {/* Decorative stippled halo */}
-                      <div className="absolute -inset-2 bg-[#ffb84d]/5 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000"></div>
-                      
-                      <div className="relative bg-white/[0.03] backdrop-blur-2xl p-[1px] border border-white/10">
-                        <label className="sr-only" htmlFor="transmission_email">Email Address</label>
-                        <input 
-                          className="w-full bg-transparent border-none text-[14px] font-label-sm text-[#e5e2e3] placeholder:text-[#353436] focus:ring-0 focus:outline-none px-6 py-10 uppercase tracking-[0.1em] text-center" 
-                          id="transmission_email" 
-                          placeholder="OPERATOR@AETHELGARD.VOID" 
-                          type="email"
-                        />
-                      </div>
-                      {/* Input underline that glows */}
-                      <div className="h-[1px] w-full bg-[#1c1b1c] group-focus-within:bg-[#ffb84d] group-focus-within:shadow-[0_0_15px_rgba(255,184,77,0.5)] transition-all duration-700"></div>
+                  {/* Protocol Access Selection */}
+                  <div className="space-y-12 relative z-20">
+                    <div className="text-center space-y-4">
+                      <h1 className="text-4xl md:text-[56px] text-white font-serif tracking-tight italic">
+                        {user ? "Awaiting Command" : "Access Denied."}
+                      </h1>
+                      <p className="text-[#d6c4b0] opacity-60 font-body-md max-w-md mx-auto leading-relaxed italic">
+                        {user ? `Operator ${user.user_metadata.full_name || user.email} synchronized.` : "Protocol synchronization required. Please verify your operator credentials to establish neural link."}
+                      </p>
                     </div>
 
-                    <div className="flex flex-col items-center gap-5">
-                      <button 
-                        onClick={() => setOnboardingStep(2)}
-                        className="group relative px-10 py-3.5 overflow-hidden bg-[#ffdcb0] text-[#452b00] text-[12px] font-label-md tracking-[0.2em] uppercase hover:shadow-[0_0_30px_rgba(255,184,77,0.3)] transition-all duration-500 flex items-center justify-center gap-3">
-                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <span className="relative z-10">Confirm Address</span>
-                      </button>
-                      <div className="flex items-center gap-2 opacity-30 text-[#e5e2e3]">
-                        <span className="material-symbols-outlined text-[13px]">encrypted</span>
-                        <span className="text-[9px] font-label-sm tracking-[0.05em]">E2E ENCRYPTION ACTIVE</span>
-                      </div>
+                    <div className="flex flex-col items-center gap-6">
+                      {user ? (
+                        <Link 
+                          href="/dashboard"
+                          className="group relative px-16 py-5 overflow-hidden bg-[#ffb84d] text-[#452b00] text-[14px] font-label-md tracking-[0.3em] uppercase hover:shadow-[0_0_40px_rgba(255,184,77,0.5)] transition-all duration-700 flex items-center justify-center gap-4">
+                          <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                          <span className="relative z-10 font-bold">Launch Console</span>
+                          <span className="material-symbols-outlined text-[20px] group-hover:translate-x-2 transition-transform">terminal</span>
+                        </Link>
+                      ) : (
+                        <div className="flex flex-col sm:flex-row gap-6 w-full max-w-md">
+                          <Link 
+                            href="/auth/signup"
+                            className="flex-1 group relative px-8 py-5 overflow-hidden bg-[#ffb84d] text-[#452b00] text-[12px] font-label-md tracking-[0.2em] uppercase hover:shadow-[0_0_30px_rgba(255,184,77,0.4)] transition-all duration-500 flex flex-col items-center justify-center">
+                            <span className="relative z-10 font-bold">Get Started</span>
+                            <span className="relative z-10 opacity-60 text-[9px]">Request Alpha Access</span>
+                          </Link>
+                          
+                          <Link 
+                            href="/auth/login"
+                            className="flex-1 group relative px-8 py-5 overflow-hidden bg-white/[0.03] border border-white/10 text-white text-[12px] font-label-md tracking-[0.2em] uppercase hover:bg-white/10 hover:border-[#ffb84d]/40 transition-all duration-500 flex flex-col items-center justify-center">
+                            <span className="relative z-10 font-bold">Sign In</span>
+                            <span className="relative z-10 opacity-60 text-[9px]">Resume Session</span>
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   </div>
 

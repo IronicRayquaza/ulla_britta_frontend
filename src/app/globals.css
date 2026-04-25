@@ -118,3 +118,12 @@ body {
 .font-label-sm { font-family: var(--font-space-grotesk); font-size: 12px; line-height: 1.4; letter-spacing: 0.05em; font-weight: 500; }
 .font-headline-xl { font-family: var(--font-newsreader); font-size: 64px; line-height: 1.1; letter-spacing: -0.02em; font-weight: 300; }
 .font-headline-lg { font-family: var(--font-newsreader); font-size: 40px; line-height: 1.2; font-weight: 400; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
