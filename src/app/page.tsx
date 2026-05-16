@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 
 type PresentationStage = 'loading' | 'hero' | 'capabilities' | 'video' | 'ready';
 
@@ -20,14 +21,17 @@ export default function Home() {
 
   useEffect(() => {
     const checkUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-      if (user) {
+      const { data: { user: realUser } } = await supabase.auth.getUser();
+      setUser(realUser);
+
+      // REDIRECT BYPASS FOR DUMMY USER
+      if (user && user.id !== 'dummy-id') {
         router.push('/dashboard');
       }
     };
     checkUser();
   }, [supabase, router]);
+
   
   const statuses = [
     { text: "Analyzing Repository Architecture...", icon: "database" },
@@ -91,13 +95,24 @@ export default function Home() {
     }
   }, [stage]);
 
-  const handlePowerOn = () => {
+  const handlePowerOn = async () => {
     if (user) {
-      router.push('/dashboard');
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('onboarding_completed')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (profile?.onboarding_completed) {
+        router.push('/dashboard');
+      } else {
+        router.push('/onboarding');
+      }
     } else {
       router.push('/auth/login');
     }
   };
+
 
   return (
     <div className={`relative w-full transition-colors duration-[2000ms] ${isPoweredOn ? 'bg-black' : 'bg-zinc-950'} overflow-x-hidden ${stage !== 'ready' ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
@@ -316,6 +331,14 @@ export default function Home() {
                   <span className="material-symbols-outlined text-white text-[28px] md:text-[32px] transition-transform duration-500 group-hover:scale-110 group-active:scale-95 drop-shadow-[0_0_4px_rgba(255,255,255,0.5)]">power_settings_new</span>
                 </button>
                 <div className="mt-8 text-orange-200 font-label-sm tracking-[0.4em] text-[10px] md:text-xs animate-pulse bg-orange-600/30 px-6 py-2 rounded-full border border-orange-500/50 backdrop-blur-lg">INITIATE_UP_LINK</div>
+                
+                {!user && (
+                  <div className="mt-8 flex items-center gap-6 text-[10px] uppercase font-label-sm tracking-widest">
+                    <Link href="/auth/login" className="text-white/40 hover:text-amber-500 transition-colors">Sign In</Link>
+                    <div className="w-[1px] h-3 bg-white/10"></div>
+                    <Link href="/auth/signup" className="text-white/40 hover:text-amber-500 transition-colors">Request Access</Link>
+                  </div>
+                )}
               </div>
            </div>
         ) : (

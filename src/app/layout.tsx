@@ -28,8 +28,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html
+    <html
       lang="en"
+      suppressHydrationWarning
       className={`dark ${inter.variable} ${jetbrainsMono.variable} ${outfit.variable} h-full antialiased`}
     >
       <head>

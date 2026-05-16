@@ -127,3 +127,45 @@ body {
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-out forwards;
 }
+
+/* 
+ * PRISMATIC NOIR CUSTOM SCROLLBARS 
+ * Matches the amber-glow and dark-surface aesthetic
+ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 184, 77, 0.1);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 184, 77, 0.4);
+  box-shadow: 0 0 10px rgba(255, 184, 77, 0.2);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 184, 77, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 184, 77, 0.3);
+}
+
+/* Scrollbar Corner */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
